@@ -20,3 +20,20 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'C:\Users\Sandeep\Downloads\DevopsBasics-master\DevopsBasics-master\webapp'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    OverWrite: true
+- task: CopyPublishBuildArtifacts@1
+  inputs:
+    CopyRoot: '$(Agent.BuildDirectory)'
+    Contents: '**'
+    ArtifactName: 'demo'
+    ArtifactType: 'Container'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop-new'
+    publishLocation: 'Container'
